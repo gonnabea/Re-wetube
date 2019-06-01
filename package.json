@@ -1,0 +1,10 @@
+{
+  "name": "wetube-re",
+  "version": "1.0.0",
+  "description": "Re-cloning Youtube with Vanilla JS and NodeJS",
+  "main": "index.js",
+  "author": "Jiwon",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
