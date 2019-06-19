@@ -29,7 +29,7 @@ const config = {
                         ident: 'postcss',
                         loader: "postcss-loader",
                         options: {
-                            plugins() {
+                            plugin() {
                                 return [autoprefixer({ browsers: "cover 99.5%" })];
                             }
                         }
@@ -44,7 +44,7 @@ const config = {
 
     output: {
         path: OUTPUT_DIR,
-        filename: "[name].js"
+        filename: "[name].js" // 어떻게 이게 main.js가 되었을까?
     },
     plugins: [new ExtractCSS("styles.css")]
 };
