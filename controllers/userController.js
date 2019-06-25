@@ -1,42 +1,54 @@
+import passport from 'passport';
 import routes from "../routes";
+import User from "../models/User";
 
 export const getJoin = (req, res) =>
- res.render("join", { pageTitle:"Join" });
+    res.render("join", { pageTitle: "Join" });
 
-export const postJoin = (req, res) => {
-    console.log(req.body)
+export const postJoin = async (req, res, next) => {
     const {
-        body: { name, email, password, password2}
+        body: { name, email, password, password2 }
     } = req;
-    if(password !== password2){
-        res.status(400)
-        res.render("join", { pageTitle:"Join" });
+    if (password !== password2) {
+        res.status(400);
+        res.render("join", { pageTitle: "Join" });
     } else {
-        //To Do: Register User(사용자 등록)
-        //To Do: Log User in (사용자 로그인)
-        res.redirect(routes.home);
+        try {
+            const user = await User({
+                name,
+                email
+            });
+            await User.register(user, password);
+            next();
+        } catch (error) {
+            console.log(error);// To Do: Log User in (사용자 로그인)
+            res.redirect(routes.home);
+        }
+
     }
-}
- 
+};
+
+
+
 
 
 export const getLogin = (req, res) =>
- res.render("login", { pageTitle:"Log In" });
-export const postLogin = (req, res) => {
-    res.redirect(routes.home);
-};
+    res.render("login", { pageTitle: "Log In" });
+export const postLogin = passport.authenticate('local', {
+    failureRedirect: routes.login,
+    successRedirect: routes.home
+});
 
-export const logout = (req, res) => {
+export const logout = (req, res) =>
     // To Do: Process Log Out
- res.render("logout", {pageTitle:"logout"});
- 
- 
-}
-export const users = (req, res) =>
- res.render("users", { pageTitle:"Users" });
+    res.render("logout", { pageTitle: "logout" });
+
+
+
+
 export const userDetail = (req, res) =>
- res.render("userDetail", { pageTitle:"userDetail" });
-export const editProfile = (req, res) => 
-res.render("editProfile", { pageTitle:"Edit Profile" });
+    res.render("userDetail", { pageTitle: "userDetail" });
+export const editProfile = (req, res) =>
+    res.render("editProfile", { pageTitle: "Edit Profile" });
 export const changePassword = (req, res) =>
- res.render("changePassword", { pageTitle:"Change Password"});
+    res.render("changePassword", { pageTitle: "Change Password" });

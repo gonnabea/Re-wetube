@@ -23,7 +23,7 @@ const config = {
                 test: /\.(scss)$/,
                 use: ExtractCSS.extract([
                     {
-                        loader: "css-loader"
+                        loader: "css-loader" // webpack이 css를 이해할 수 있도록 함
                     },
                     {
                         ident: 'postcss',
@@ -44,7 +44,7 @@ const config = {
 
     output: {
         path: OUTPUT_DIR,
-        filename: "[name].js" // 어떻게 이게 main.js가 되었을까?
+        filename: "[name].js"
     },
     plugins: [new ExtractCSS("styles.css")]
 };
